@@ -1,1 +1,115 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ICT 10 - Non-Metal Elements Search</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- PyScript -->
+    <link rel="stylesheet" href="https://pyscript.net/releases/2026.7.3/core.css" />
+    <script type="module" src="https://pyscript.net/releases/2026.7.3/core.js"></script>
+
+    <style>
+        .body {
+            background-image: https://s-ink.org/periodic-table-of-elements;
+            background-size: cover;
+            background-position: center;
+            text-color: white; 
+        }
+        .search-card {
+            max-width: 500px;
+            margin: 40px auto;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(247, 246, 246, 0);
+            background-color: #dce4f5;
+            text-color: #fefdfd;
+        }
+        .result-box {
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 20px;
+            background-color: #fdfdfd;
+            text-align: left;
+        }
+       h1> class+"text-white mb-4">Non-Metal Elements Search</h1>
+    
+    </style>
+    
+</head>
+<body>
+
+    <div class="container text-center">
+        <div class="card search-card">
+            <h2 class="mb-3 text-primary">Non-Metal Elements</h2>
+            <p class="text-muted">Enter an element symbol or name to search</p>
+            
+            <div class="mb-3">
+                <input type="text" id="elementInput" class="form-control text-center" placeholder="Example: H or Helium">
+            </div>
+
+            <button py-click="search_element" class="btn btn-primary w-100">Search Element</button>
+
+            <div class="result-box mt-4">
+                <h4 class="text-center mb-3">Showcase Result</h4>
+                <p><b>Element Symbol/Code:</b> <span id="element_code">-</span></p>
+                <p><b>Element Name:</b> <span id="element_name">-</span></p>
+                <p><b>Non-Metal Category:</b> <span id="non_metal">-</span></p>
+                <p><b>Atomic Number:</b> <span id="atomic_number">-</span></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- PyScript Logic -->
+    <script type="py">
+        import js
+
+        # Dictionary format: Key -> (Name, Category, Atomic Number)
+        non_metals = {
+            "H": ("Hydrogen", "Reactive Non-metal", "1"),
+            "HE": ("Helium", "Noble Gas", "2"),
+            "C": ("Carbon", "Reactive Non-metal", "6"),
+            "N": ("Nitrogen", "Reactive Non-metal", "7"),
+            "O": ("Oxygen", "Reactive Non-metal", "8"),
+            "F": ("Fluorine", "Reactive Non-metal / Halogen", "9"),
+            
+        
+        
+        
+        }
+
+        # Name lookup mapping
+        name_to_symbol = {val[0].upper(): key for key, val in non_metals.items()}
+
+        def search_element(event):
+            # Read input value and clean whitespace/casing
+            query = js.document.getElementById("elementInput").value.strip().upper()
+
+            # Determine key by symbol or full name
+            symbol = None
+            if query in non_metals:
+                symbol = query
+            elif query in name_to_symbol:
+                symbol = name_to_symbol[query]
+
+            # Fetch result or set default missing values
+            if symbol:
+                name, category, atomic_num = non_metals[symbol]
+                js.document.getElementById("element_code").innerText = symbol
+                js.document.getElementById("element_name").innerText = name
+                js.document.getElementById("non_metal").innerText = category
+                js.document.getElementById("atomic_number").innerText = atomic_num
+            else:
+                js.document.getElementById("element_code").innerText = "N/A"
+                js.document.getElementById("element_name").innerText = "Element not found"
+                js.document.getElementById("non_metal").innerText = "-"
+                js.document.getElementById("atomic_number").innerText = "-"
+    </script>
+
+</body>
+</html>
